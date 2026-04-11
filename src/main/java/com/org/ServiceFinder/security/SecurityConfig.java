@@ -51,7 +51,12 @@ public class SecurityConfig {
                         // Other endpoints
                         .requestMatchers("/provider-services/**").permitAll()
                         .requestMatchers("/map/**").permitAll()
-                        .requestMatchers("/bookings/**").permitAll()
+
+                        // Bookings permissions
+                        .requestMatchers(HttpMethod.PUT, "/bookings/*/status").hasAuthority("PROVIDER")
+                        .requestMatchers(HttpMethod.PUT, "/bookings/*/cancel").hasAnyAuthority("USER", "PROVIDER")
+                        .requestMatchers("/bookings/**").authenticated()
+
                         .requestMatchers("/users/**").authenticated()
 
                         .anyRequest().authenticated()

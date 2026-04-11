@@ -99,7 +99,8 @@ public class BookingService {
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
 
         User currentUser = userService.getCurrentUser();
-        if (!booking.getUser().getId().equals(currentUser.getId())) {
+        if (!booking.getUser().getId().equals(currentUser.getId()) && 
+            !booking.getServiceProvider().getUser().getId().equals(currentUser.getId())) {
             throw new RuntimeException("Not authorized to cancel this booking");
         }
 

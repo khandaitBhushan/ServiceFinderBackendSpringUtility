@@ -913,23 +913,23 @@
 
 ---
 
-## 🐛 BACKEND ISSUES TO FIX
+## ✅ BACKEND ISSUES FIXED
 
-### 1. Search Providers - Case Sensitivity & Partial Matching
+### 1. ~Search Providers - Case Sensitivity & Partial Matching~ [FIXED]
 **Issue:** Search only looks for exact "Nagpur" instead of partial matches like "Lokmanya Nagar, Nagpur"
-**Fix Needed:** Update repository to use LIKE queries with case-insensitive matching
+**Fix Applied:** The repository methods were updated to use `LIKE` queries with `LOWER()` case-insensitive matching.
 
-### 2. Booking Status Update - 403 Forbidden
+### 2. ~Booking Status Update - 403 Forbidden~ [FIXED]
 **Issue:** PUT `/bookings/{id}/status` returns 403 even with provider token
-**Fix Needed:** Update SecurityConfig to properly authorize provider role for booking status updates
+**Fix Applied:** Updated `SecurityConfig.java` to properly authorize provider role for booking status updates using `.requestMatchers(HttpMethod.PUT, "/bookings/*/status").hasAuthority("PROVIDER")`.
 
-### 3. Booking Cancel - 403 Forbidden  
+### 3. ~Booking Cancel - 403 Forbidden~ [FIXED]
 **Issue:** PUT `/bookings/{id}/cancel` returns 403 even with valid tokens
-**Fix Needed:** Update SecurityConfig to allow both USER and PROVIDER roles for booking cancellation
+**Fix Applied:** Updated `SecurityConfig.java` to allow both USER and PROVIDER roles. Also updated `BookingService.java` to verify provider ID during cancellation.
 
-### 4. Service Category Name Null
+### 4. ~Service Category Name Null~ [FIXED]
 **Issue:** Provider registration response shows `"name": null` for serviceCategory
-**Fix Needed:** Ensure service category name is properly populated in response
+**Fix Applied:** Updated `ServiceProviderService.java` to fetch full `ServiceCategory` details from DB before saving the provider to ensure response populated correctly.
 
 ---
 

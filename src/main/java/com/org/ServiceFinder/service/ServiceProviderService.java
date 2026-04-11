@@ -35,6 +35,10 @@ public class ServiceProviderService {
     public ServiceProvider registerProvider(ServiceProvider provider) {
         User currentUser = userService.getCurrentUser();
         provider.setUser(currentUser);
+        if (provider.getServiceCategory() != null && provider.getServiceCategory().getId() != null) {
+            ServiceCategory category = categoryRepository.findById(provider.getServiceCategory().getId()).orElse(null);
+            provider.setServiceCategory(category);
+        }
         return providerRepository.save(provider);
     }
 
